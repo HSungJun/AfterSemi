@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 	<bean id="tv" class="kh.spring.elec.LGTV"> -->
+<!-- 		<constructor-arg value="1000000"/> -->
+<!-- 		<constructor-arg value="LG"/> -->
+<!-- 		<constructor-arg ref="sony" /> -->
+<!-- 	</bean> -->
+
+
+	<bean id="tv" class="kh.spring.elec.LGTV">
+		<property name="speaker" ref="sony"/>
+	</bean>
+
+	<bean id="sony" class="kh.spring.elec.AppleSpeaker"></bean>
+	
+
+
+</beans>
