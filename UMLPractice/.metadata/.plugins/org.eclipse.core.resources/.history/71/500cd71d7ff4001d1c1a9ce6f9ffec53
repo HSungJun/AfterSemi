@@ -1,0 +1,7 @@
+package reTest;
+
+public class CaffeLatte implements Coffee{
+	public int addMilk() {
+		return 0;
+	}
+}

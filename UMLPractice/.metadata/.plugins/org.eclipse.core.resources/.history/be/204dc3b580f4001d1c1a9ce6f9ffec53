@@ -1,0 +1,10 @@
+package reTest;
+
+public class OrderSheet {
+	
+	public CaffeLatte caffeLatte;
+	public Cake cake;
+	
+	public OrderSheet() {
+	}
+}

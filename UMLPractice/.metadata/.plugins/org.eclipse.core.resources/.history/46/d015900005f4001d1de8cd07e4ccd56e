@@ -1,0 +1,13 @@
+package P5;
+
+public class Item {
+	
+	private String category;
+	private String itemCode;
+	private String itemName;
+	private int itemPrice;
+	
+	public Item () {}
+	public Item (category. itemCode,itemName, itemPrice) {}
+	
+}

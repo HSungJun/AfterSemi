@@ -1,0 +1,9 @@
+package P2;
+
+public class Car {
+	public Car(Engine Engine, Frame Frame, Wheel Wheel) {
+		this.Engine = Engine;
+		this.Frame = Frame;
+		this.Wheel = Wheel;
+	};
+}

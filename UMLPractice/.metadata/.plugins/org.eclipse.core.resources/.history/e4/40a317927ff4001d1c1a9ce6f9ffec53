@@ -1,0 +1,5 @@
+package reTest;
+
+public interface Coffee {
+
+}

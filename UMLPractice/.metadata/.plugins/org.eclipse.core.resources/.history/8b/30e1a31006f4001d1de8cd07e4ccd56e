@@ -1,0 +1,11 @@
+package P5;
+
+public class ShopKeeper {
+	public int makeBillPaper() {
+		return 0;
+	}
+	
+	private Cart cart;
+	
+	
+}

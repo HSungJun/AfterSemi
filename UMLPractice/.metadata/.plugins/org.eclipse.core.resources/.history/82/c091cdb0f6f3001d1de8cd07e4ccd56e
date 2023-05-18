@@ -1,0 +1,6 @@
+package P2;
+
+public class Car {
+	private Engine engine = new Engine();
+	private Eyes eyes = new Eyes();
+}

@@ -1,0 +1,8 @@
+package reTest;
+
+public class Americano implements Coffee{
+	public int addWater() {
+		return 0;
+		
+	};
+}
