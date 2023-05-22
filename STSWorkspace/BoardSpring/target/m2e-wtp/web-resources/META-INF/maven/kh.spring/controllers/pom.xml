@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>kh.spring</groupId>
 	<artifactId>controllers</artifactId>
-	<name>Spring03</name>
+	<name>BoardSpring</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -32,7 +32,7 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+				
 		<!-- Database ralated -->
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
@@ -52,7 +52,7 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 		
-
+				
 				
 		<!-- AspectJ -->
 		<dependency>
