@@ -7,8 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/write.board" method="post" enctype="multipart/form-data"
-		id="form" name="form">
+	<form action="/board/write" method="post" id="form" name="form">
 		<table border="1" width="500" height="400">
 
 			<tr>
@@ -24,21 +23,22 @@
 			</tr>
 			<tr>
 				<td colspan="2"><textarea cols="100%" rows="20%"
-						placeholder="글 내용을 입력해주세요" id="contents" name="contents"></textarea></td>
+						placeholder="글 내용을 입력해주세요" id="content" name="content"></textarea></td>
 			</tr>
 
 			<tr>
 				<td><input type="file" name="file"></td>
-				<td align="right"><input type="button" value="목록으로"
-					id="toList"> <input type="submit" value="작성완료"
-					id="complete"></td>
+				<td align="right">
+				<input type="button" value="목록으로" id="toList"> 
+				<input type="submit" value="작성완료" id="complete">
+				</td>
 			</tr>
 
 		</table>
 	</form>
 	<script>
 		$("#toList").on("click", function() {
-			location.href = "/list.board?cpage=${sessionScope.currentPage}";
+			location.href = "/board/boardlist?cpage=${sessionScope.currentPage}";
 		});
 	</script>
 

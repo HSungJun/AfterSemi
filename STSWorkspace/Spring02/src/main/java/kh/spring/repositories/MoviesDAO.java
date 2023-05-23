@@ -1,41 +1,84 @@
 package kh.spring.repositories;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.spring.dto.MoviesDTO;
 
 @Repository
 public class MoviesDAO {
-
+	
 	@Autowired
-	private JdbcTemplate jdbc;
+	private SqlSessionTemplate mybatis;
 	
 	public int insert(MoviesDTO dto) {
-		String sql = "insert into movies values(movies_seq.nextval,?,?)";
-		return jdbc.update(sql,dto.getTitle(),dto.getGenre());
-		
+		return mybatis.insert("Movies.insert",dto);
 	}
-	//Spring JDBC > select > 단일값 = quertForObjecct / 대량값 query
-	//insert update delete > jdbc.update
 	
-	public int deleteMovieById (int delid) {
-		String sql = "delete from movies where id = ?";
-		return jdbc.update(sql,delid);
+	public List<MoviesDTO> selectAll(){
+		return mybatis.selectList("Movies.selectAll");
+	}
+	
+	public int deleteMovieById (int id) {
+		return mybatis.delete("Movies.delete",id);
 	}
 	
 	public int modifyMovieById(MoviesDTO dto)  {
-		String sql = "update movies set title = ?, genre = ? where id = ?";
-		return jdbc.update(sql, dto.getTitle(), dto.getGenre(),dto.getId());
+		return mybatis.update("Movies.update",dto);
 	}
+
+	public List<MoviesDTO> selectByCon(String column, String value) {
+		Map<String, String> param = new HashMap<>();
+		param.put("column", column);
+		param.put("value", value);
+		
+		return mybatis.selectList("Movies.selectByCon",param);
+	}
+
+	public List<MoviesDTO> selectByMultiCon(MoviesDTO dto) {
+
+		return mybatis.selectList("Movies.selectByMultiCon",dto);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+//	@Autowired
+//	private JdbcTemplate jdbc;
+//	
+//	public int insert(MoviesDTO dto) {
+//		String sql = "insert into movies values(movies_seq.nextval,?,?)";
+//		return jdbc.update(sql,dto.getTitle(),dto.getGenre());
+//		
+//	}
+//	//Spring JDBC > select > 단일값 = quertForObjecct / 대량값 query
+//	//insert update delete > jdbc.update
+//	
+//	public int deleteMovieById (int delid) {
+//		String sql = "delete from movies where id = ?";
+//		return jdbc.update(sql,delid);
+//	}
+//	
+//	public int modifyMovieById(MoviesDTO dto)  {
+//		String sql = "update movies set title = ?, genre = ? where id = ?";
+//		return jdbc.update(sql, dto.getTitle(), dto.getGenre(),dto.getId());
+//	}
+	
+	//-------------------------------------------------------------------------
+	
 	
 /*	public List<MoviesDTO> selectAll(){
 		String sql = "select * from movies";
@@ -62,23 +105,23 @@ public class MoviesDAO {
 	*/
 	
 	// list 불러오는것도 상단처럼 되나 DTO와 DB의 컬럼명이 같다는 전제하에 아래와 같이 사용 가능
-	public List<MoviesDTO> selectAll(){
-		String sql = "select * from movies";
-		return jdbc.query(sql, new BeanPropertyRowMapper<MoviesDTO>(MoviesDTO.class));
-	
-	}
-	
-	
-	//.class 는 자료형을 표현하는 말
-	public MoviesDTO selectById(int id) {
-		String sql = "select * from movies where id = ?";
-		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<MoviesDTO>(MoviesDTO.class),id);
-	}
-	
-	public int selectCount() {
-		String sql = "select count(*) from movies";
-		return jdbc.queryForObject(sql, Integer.class);
-	}
+//	public List<MoviesDTO> selectAll(){
+//		String sql = "select * from movies";
+//		return jdbc.query(sql, new BeanPropertyRowMapper<MoviesDTO>(MoviesDTO.class));
+//	
+//	}
+//	
+//	
+//	//.class 는 자료형을 표현하는 말
+//	public MoviesDTO selectById(int id) {
+//		String sql = "select * from movies where id = ?";
+//		return jdbc.queryForObject(sql, new BeanPropertyRowMapper<MoviesDTO>(MoviesDTO.class),id);
+//	}
+//	
+//	public int selectCount() {
+//		String sql = "select count(*) from movies";
+//		return jdbc.queryForObject(sql, Integer.class);
+//	}
 	
 	
 	

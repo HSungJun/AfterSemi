@@ -172,7 +172,7 @@ button:hover {
 				},
 				datatype : "json"
 			}).done(function(resp){
-				if(resp=="1"){
+				if(resp==1){
 					alert("이미 사용중인 아이디입니다.")
 					$("#id").val("");
 				}else{

@@ -28,7 +28,7 @@
 				<c:forEach var="i" items="${list}">
 					<tr>
 						<td align="center">${i.seq}</td>
-						<td><a href="contents.board?seq=${i.seq}">${i.title}</a></td>
+						<td><a href="/board/contentView?seq=${i.seq}">${i.title}</a></td>
 						<td align="center">${i.writer}</td>
 						<td align="center">${i.view_count}</td>
 						<td align="center"><fmt:formatDate value="${i.write_date}"
@@ -75,7 +75,7 @@
 	
 	<script>
 		$("#write").on("click",function(){
-			location.href="/board/write.jsp"
+			location.href="/board/toWrite"
 		})
 	</script>
 	

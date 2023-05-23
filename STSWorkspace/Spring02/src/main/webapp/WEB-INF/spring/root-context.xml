@@ -4,21 +4,36 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
-		
+
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
 		<property name="username" value="kh"></property>
 		<property name="password" value="kh"></property>
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
-		<property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+		<property name="jdbcUrl"
+			value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="driverClassName"
+			value="oracle.jdbc.OracleDriver"></property>
 	</bean>
-	
-	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
-		<property name="dataSource" ref="dataSource"></property>	
+
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations"
+			value="classpath:/mappers/*-mapper.xml"></property>
 	</bean>
-	<!-- 히카리CP를 > Springjdbc에 참조 dataSource를 참조 xml 방식의  DI (의존성 주입) -->
-		
-		<context:component-scan base-package="kh.spring.repositories" />
-		
+
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory"
+			ref="sqlSessionFactory"></constructor-arg>
+	</bean><!-- 기본 생성자가 없어서 생성자를 주어야 함. -->
+
+	<!-- 스프링 jdbc mybatis 로인해 미사용 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" 
+		> <property name="dataSource" ref="dataSource"></property> </bean> 히카리CP를 
+		> Springjdbc에 참조 dataSource를 참조 xml 방식의 DI (의존성 주입) -->
+
+	<context:component-scan
+		base-package="kh.spring.repositories" />
+
 </beans>

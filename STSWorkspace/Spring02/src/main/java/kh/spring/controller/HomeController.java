@@ -51,39 +51,63 @@ public class HomeController {
 			model.addAttribute("list",list);
 			return "list";
 		}
-	
-	
+//	
+//	
 	@RequestMapping("/deleteById")
 	public String deleteMovieById(int delid)throws Exception  {
 			int result = dao.deleteMovieById(delid);
 			return "redirect:/toOutput";
 		}
-	
+//	
 	@RequestMapping("/modifyMovie")
 	public String modifyMovie(MoviesDTO dto)throws Exception{
 		int result = dao.modifyMovieById(dto);
 		return "redirect:/toOutput";
 	}
 	
-	@RequestMapping("/selectById")
-	public String selectById(int id) {
-		MoviesDTO dto = dao.selectById(id);
-		System.out.println(dto.getId() + " : " + dto.getTitle()+ " : " + dto.getGenre());
-		return "redirect:/";
+	@RequestMapping("/toMyBatis")
+	public String toMyBatis()throws Exception{
+		return "mybatis";
 	}
 	
-	@RequestMapping("/selectCount")
-	public String selectCount() {
-		int result = dao.selectCount();
-		System.out.println(result);
-		return "redirect:/";
+	@RequestMapping("/selectByCon")
+	public String selectByCon (String column, String value)throws Exception{
+		List<MoviesDTO> list = dao.selectByCon(column,value);
+		
+		for(MoviesDTO dto : list) {
+			System.out.println(dto.getId()+":"+dto.getTitle()+":"+dto.getGenre());
+		}
+		
+		return "mybatis";
+	}
+	
+	@RequestMapping("/selectByMultiCon")
+	public String selectByMultiCon (MoviesDTO dto)throws Exception{
+		List<MoviesDTO> list = dao.selectByMultiCon(dto);
+		
+		for(MoviesDTO e : list) {
+			System.out.println(e.getId()+":"+e.getTitle()+":"+e.getGenre());
+		}
+		
+		return "mybatis";
 	}
 	
 	
-	
-	
-	
-	
+//	
+//	@RequestMapping("/selectById")
+//	public String selectById(int id) {
+//		MoviesDTO dto = dao.selectById(id);
+//		System.out.println(dto.getId() + " : " + dto.getTitle()+ " : " + dto.getGenre());
+//		return "redirect:/";
+//	}
+//	
+//	@RequestMapping("/selectCount")
+//	public String selectCount() {
+//		int result = dao.selectCount();
+//		System.out.println(result);
+//		return "redirect:/";
+//	}
+//	
 	//예외처리 argument에 Exceiption e 를 넣어 pispatcher에게 요청하여 출력
 	@ExceptionHandler(Exception.class)
 	public String exceptionHandler(Exception e) {

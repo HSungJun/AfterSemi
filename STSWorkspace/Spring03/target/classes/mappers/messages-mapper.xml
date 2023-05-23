@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="Messages">
+  
+  	<insert id="insert">
+  		insert into messages values(messages_seq.nextval,#{writer},#{message})
+  	</insert>
+  
+  	<select id="selectAll" resultType="kh.spring.dto.MessagesDTO">
+  		select * from messages
+  	</select>
+  
+  	<delete id="delete">
+  		delete from messages where seq = #{seq}
+  	</delete>
+  
+  	<update id="update">
+  		update messages set writer = #{writer}, message = #{message} where seq = #{seq}
+  	</update>
+  
+  </mapper>

@@ -40,17 +40,21 @@ public class MemberController {
 	@RequestMapping(value="IdCheck",produces="text/html;charset=utf8") // 
 	public String IdCheck(String id) {
 		System.out.println("중복검사ID="+id);
-		int result = dao.IdCheck(id);
+		MembersDTO result = dao.IdCheck(id);
 		//ajax는 페이지 전환없이 소스코드를 보냄
-		return String.valueOf(result);
+		int resultId = 1;
+		if (result == null) {
+			resultId = 0;
+		}
+		return String.valueOf(resultId);
 		//dispatcher가 return을 받음 String이 리턴될경우 viewresolver한테 보냄 > 페이지로 넘어가려함.
 	}
 
 	@RequestMapping("login")
 	public String login(String id, String pw, RedirectAttributes rdat) throws Exception {
 		String shapw = EncryptionUnits.sha512(pw);
-		boolean result = dao.login(id,shapw);
-		if (result) {
+		MembersDTO result = dao.login(id,shapw);
+		if (result!=null) {
 			session.setAttribute("loginId", id);
 			rdat.addFlashAttribute("status","LS");
 		}

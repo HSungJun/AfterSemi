@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,29 +20,49 @@ import kh.spring.dto.MessagesDTO;
 public class MessagesDAO {
 	
 	@Autowired
-	private JdbcTemplate jdbc;
-
-	public int writeMsg(MessagesDTO dto)  {
-		String sql = "insert into messages values(messages_seq.nextval,?,?)";
-		return jdbc.update(sql,dto.getWriter(),dto.getMessage());
+	private SqlSessionTemplate mybatis;
+	
+	public int writeMsg(MessagesDTO dto) {
+		return mybatis.insert("Messages.insert",dto);
 	}
 	
 	public List<MessagesDTO> selectAll()  {
-		String sql = "select * from messages";
-		return jdbc.query(sql, new BeanPropertyRowMapper<MessagesDTO>(MessagesDTO.class));
+		return mybatis.selectList("Messages.selectAll");
 	}
-	
 	
 	public int deleteMovieById(int delseq) {
-		String sql = "delete from messages where seq = ?";
-		return jdbc.update(sql, delseq);
+		return mybatis.delete("Messages.delete",delseq);
 	}
-	
 	
 	public int modifyMsgBySeq(MessagesDTO dto)   {
-		String sql = "update messages set writer = ?, message = ? where seq = ?";
-		return jdbc.update(sql, dto.getWriter(), dto.getMessage(), dto.getSeq());
+		return mybatis.update("Messages.update",dto);
 	}
+	
+	
+	
+	
+
+//	public int writeMsg(MessagesDTO dto)  {
+//		String sql = "insert into messages values(messages_seq.nextval,?,?)";
+//		return jdbc.update(sql,dto.getWriter(),dto.getMessage());
+//	}
+	
+//	public List<MessagesDTO> selectAll()  {
+//		String sql = "select * from messages";
+//		return jdbc.query(sql, new BeanPropertyRowMapper<MessagesDTO>(MessagesDTO.class));
+//	}
+	
+	
+//	public int deleteMovieById(int delseq) {
+//		String sql = "delete from messages where seq = ?";
+//		return jdbc.update(sql, delseq);
+//	}
+	
+	
+//	public int modifyMsgBySeq(MessagesDTO dto)   {
+//		String sql = "update messages set writer = ?, message = ? where seq = ?";
+//		return jdbc.update(sql, dto.getWriter(), dto.getMessage(), dto.getSeq());
+//	}
 	
 	
 	
