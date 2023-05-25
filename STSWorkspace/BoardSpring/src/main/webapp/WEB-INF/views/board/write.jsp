@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form action="/board/write" method="post" id="form" name="form">
+	<form action="/board/write" method="post" id="form" name="form" enctype="multipart/form-data">
 		<table border="1" width="500" height="400">
 
 			<tr>
@@ -27,7 +27,7 @@
 			</tr>
 
 			<tr>
-				<td><input type="file" name="file"></td>
+				<td><input type="file" name="files" multiple></td>
 				<td align="right">
 				<input type="button" value="목록으로" id="toList"> 
 				<input type="submit" value="작성완료" id="complete">

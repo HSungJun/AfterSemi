@@ -16,6 +16,10 @@
 		<select id="toContents" resultType="kh.spring.dto.BoardDTO">
 			select * from board where seq = ${seq}
 		</select>
+		
+		<select id="selectseq" resultType="int">
+			select max(seq) from board
+		</select>
 	
 		
 	</mapper>

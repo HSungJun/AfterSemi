@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
 <style>
 .seq {
 	display: none
@@ -17,7 +17,7 @@
 </head>
 <body>
 	<!-- 게시글 내용 -->
-	<form action="modify.board" method="post">
+	<form action="/board/modify" method="post">
 		<table border="1" width="500" height="400">
 
 			<tr>
@@ -45,8 +45,7 @@
 
 			<tr align="right">
 
-				<td align="left">첨부파일 : <a
-					href="/download.file?sysName=${files.sysName }&oriName=${files.oriName}">${files.oriName }</a></td>
+				<td align="left" id=>첨부파일 : </td>
 
 				<td colspan="2"><c:choose>
 						<c:when test="${dto.writer eq sessionScope.loginId}">
@@ -117,9 +116,11 @@
 	</c:if>
 
 
-	<script>
+	
+</body>
+<script>
 		$("#toList").on("click", function() {
-			location.href = "/list.board?cpage="+${sessionScope.currentPage};
+			location.href = "/board/boardlist";
 		})
 
 		$("#delete").on("click", function() {
@@ -154,5 +155,4 @@
 					}
 				})
 	</script>
-</body>
 </html>
