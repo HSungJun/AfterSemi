@@ -11,14 +11,14 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import commons.EncryptionUnits;
 import kh.spring.dto.MembersDTO;
-import kh.spring.repositories.MemberDAO;
+import kh.spring.services.MemberService;
 
 @Controller
 @RequestMapping("/member/")
 public class MemberController {
 
 	@Autowired
-	private MemberDAO dao;
+	private MemberService memberService;	
 
 	@Autowired
 	private HttpSession session;
@@ -31,8 +31,8 @@ public class MemberController {
 
 	@RequestMapping("join")
 	public String join(MembersDTO dto) throws Exception {
-		dto.setPw(EncryptionUnits.sha512(dto.getPw()));
-		int result = dao.join(dto);
+		dto.setPw(memberService.shapw(dto.getPw()));
+		int result = memberService.join(dto);
 		return "redirect:/";
 	}
 
@@ -40,7 +40,7 @@ public class MemberController {
 	@RequestMapping(value="IdCheck",produces="text/html;charset=utf8") // 
 	public String IdCheck(String id) {
 		System.out.println("중복검사ID="+id);
-		MembersDTO result = dao.IdCheck(id);
+		MembersDTO result = memberService.IdCheck(id);
 		//ajax는 페이지 전환없이 소스코드를 보냄
 		int resultId = 1;
 		if (result == null) {
@@ -52,8 +52,8 @@ public class MemberController {
 
 	@RequestMapping("login")
 	public String login(String id, String pw, RedirectAttributes rdat) throws Exception {
-		String shapw = EncryptionUnits.sha512(pw);
-		MembersDTO result = dao.login(id,shapw);
+		pw = memberService.shapw(pw);
+		MembersDTO result = memberService.login(id,pw);
 		if (result!=null) {
 			session.setAttribute("loginId", id);
 			rdat.addFlashAttribute("status","LS");
@@ -71,7 +71,7 @@ public class MemberController {
 	@RequestMapping("out")
 	public String out (String loginId) {
 		
-		int result = dao.memberOut(loginId);
+		int result = memberService.memberOut(loginId);
 		if(result == 1) {
 			session.invalidate();
 		}
@@ -82,7 +82,7 @@ public class MemberController {
 	@RequestMapping("myPage")
 	public String myPage(String loginId,Model model) {
 		
-		MembersDTO dto = dao.memberInfo(loginId);
+		MembersDTO dto = memberService.memberInfo(loginId);
 		model.addAttribute("dto", dto);
 		
 		return "/member/myPage";
@@ -91,7 +91,7 @@ public class MemberController {
 	@RequestMapping("updateMyInfo")
 	public String updateMyInfo(MembersDTO dto) {
 		
-		int result = dao.updateMyInfo(dto);
+		int result = memberService.updateMyInfo(dto);
 		
 		return "redirect:/member/myPage?loginId="+dto.getId();
 	}

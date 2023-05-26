@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,18 +18,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kh.spring.dto.BoardDTO;
 import kh.spring.dto.FilesDTO;
-import kh.spring.repositories.BoardDAO;
-import kh.spring.repositories.FilesDAO;
+import kh.spring.services.BoardService;
+import kh.spring.services.FileService;
 
 @Controller
 @RequestMapping("/board/")
 public class BoardController {
 	
 	@Autowired
-	private BoardDAO bdao;
+	private BoardService boardService;
 	
 	@Autowired
-	private FilesDAO fdao;
+	private FileService fileService;
 	
 	@Autowired
 	private HttpSession session;
@@ -41,61 +40,25 @@ public class BoardController {
 	}
 	
 	@RequestMapping("boardlist")
-	public String boardlist(Model model) {
-		
-		List<BoardDTO> list = bdao.boardList();
+	public String boardlist(Model model) throws Exception{
+		List<BoardDTO> list = boardService.boardList();
 		model.addAttribute("list", list);
-		
 		return "/board/boardlist";
 	}
 	
 	@RequestMapping("write")
 	public String write(BoardDTO bdto, MultipartFile[] files) throws Exception {
-		int result = bdao.write(bdto);
-		
-		int parent_seq = bdao.selectseq();
-		
+		int parent_seq = boardService.write(bdto);
 		String realPath = session.getServletContext().getRealPath("upload");
-		File realPathFile = new File(realPath);
-		if(!realPathFile.exists()) {realPathFile.mkdir();}
-
-		if(files!=null) {
-			for(MultipartFile file : files) {
-				if(file.isEmpty()) {break;} 
-				String oriName = file.getOriginalFilename(); //oriname은 있으나 sysname기능 없음
-				String sysName = UUID.randomUUID() + "_" + oriName;
-				file.transferTo(new File(realPath+"/"+sysName));
-				fdao.write(new FilesDTO(0,oriName,sysName,parent_seq));
-			}
-		}
-		return "redirect:/board/boardlist";
+		fileService.write(realPath, files,parent_seq);
+			return "redirect:/board/boardlist";
 	}
 	
 	@RequestMapping("contentView")
-	public String contentView(int seq,Model model, HttpServletResponse response) throws Exception {
-
-		BoardDTO Bdto = bdao.toContent(seq);
-		
-		String oriName = fdao.getOriName(seq);
-		String sysName = fdao.getSysName(seq);
-		
-		String realPath = session.getServletContext().getRealPath("upload");
-		File target = new File(realPath +"/"+sysName);
-		oriName = new String(oriName.getBytes("utf8"),"ISO-8859-1");
-		response.reset();
-		response.setHeader("content-disposition", "attachment;filename"+oriName);
-		
-		try(DataInputStream dis = new DataInputStream(new FileInputStream(target));
-			DataOutputStream dos = new DataOutputStream(response.getOutputStream());){
-		byte[] fileContents = dis.readAllBytes();
-		dos.write(fileContents);
-		dos.flush();
-		}
-		
-		
+	public String contentView(BoardDTO dto,Model model, HttpServletResponse response) throws Exception {
+		BoardDTO Bdto = boardService.toContent(dto.getSeq());
+		model.addAttribute("files",fileService.getfile(dto.getSeq()));
 		model.addAttribute("dto", Bdto);
-		
-		
 		return "board/content";
 	}
 	
@@ -104,7 +67,20 @@ public class BoardController {
 		return "board/content?";
 	}
 	
-	
+	@RequestMapping("download")
+	public void download(String oriName, String sysName, HttpServletResponse response) throws Exception {
+		String realPath = session.getServletContext().getRealPath("upload");
+		File target = new File(realPath +"/"+sysName);
+		oriName = new String(oriName.getBytes("utf8"),"ISO-8859-1");
+		response.reset();
+		response.setHeader("content-disposition", "attachment;filename"+oriName);
+		try(DataInputStream dis = new DataInputStream(new FileInputStream(target));
+			DataOutputStream dos = new DataOutputStream(response.getOutputStream());){
+		byte[] fileContents = dis.readAllBytes();
+		dos.write(fileContents);
+		dos.flush();
+		}
+	}
 	
 	
 }

@@ -24,7 +24,8 @@ public class BoardDAO {
 	}
 
 	public int write(BoardDTO dto) {
-		return mbs.update("Board.write",dto);
+		mbs.update("Board.write",dto);
+		return dto.getSeq();
 	}
 
 	public BoardDTO toContent(int seq) {

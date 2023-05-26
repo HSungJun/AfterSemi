@@ -10,15 +10,15 @@
   </insert>
   
   <select id="selectAll" resultType="kh.spring.dto.FilesDTO">
- 	 select * from files
+ 	 select * from files oreder by seq desc
   </select>
   
   <select id="getOriName" resultType="String">
-  	select oriname from files where parent_seq = #{seq}
+  	select oriname from files where parent_seq = #{parent_seq}
   </select>
   
   <select id="getSysName" resultType="String">
-  	select sysname from files where parent_seq = #{seq}
+  	select sysname from files where parent_seq = #{parent_seq}
   </select>
   
   

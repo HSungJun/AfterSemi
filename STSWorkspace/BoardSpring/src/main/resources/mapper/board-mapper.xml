@@ -10,7 +10,13 @@
 		</select>
 	
 		<insert id="write">
-			insert into board values (board_seq.nextval,#{writer},#{title},#{content},default,sysdate)
+			<selectKey keyProperty="seq" resultType="int" order="BEFORE">
+				select board_seq.nextval from dual
+			</selectKey>
+			insert into board values (#{seq},#{writer},#{title},#{content},default,sysdate)
+			<!-- selectKey keyProperty="seq" resultType="int" order="AFTER"> 새로 생성된 키값을 가져옴
+				select board_seq.currval from dual 위 주 sql문 실행 후 아래 sql문 실행 > seq값 가져옴
+			</selectKey -->
 		</insert>
 	
 		<select id="toContents" resultType="kh.spring.dto.BoardDTO">
@@ -18,7 +24,7 @@
 		</select>
 		
 		<select id="selectseq" resultType="int">
-			select max(seq) from board
+			select board_seq.nextval from dual
 		</select>
 	
 		

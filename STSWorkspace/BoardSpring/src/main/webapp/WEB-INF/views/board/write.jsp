@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 	<form action="/board/write" method="post" id="form" name="form" enctype="multipart/form-data">
@@ -38,8 +39,18 @@
 	</form>
 	<script>
 		$("#toList").on("click", function() {
-			location.href = "/board/boardlist?cpage=${sessionScope.currentPage}";
+			location.href = "/board/boardlist";
 		});
+		
+		$("#form").on("submit",function(){
+			if($("#title").val()==""){
+				alert("제목 미입력");	
+				return false;
+			}else if ($("#content").val()==""){
+				alert("내용 미입력");	
+				return false;
+			}
+		})
 	</script>
 
 </body>

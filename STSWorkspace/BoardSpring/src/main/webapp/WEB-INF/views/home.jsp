@@ -10,7 +10,17 @@
 	integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM="
 	crossorigin="anonymous"></script>
 </head>
+<style>
+	img{width:300px; height:400px;}
+</style>
 <body>
+
+	<img src="/resources/bbomi.jpg">
+	<!-- img태그는 request임 
+	기본동작은 dispatcher handlermapper 가 위치를 몰라서 에러가 떠야 정상
+		
+	-->
+	
 
 	<c:if test="${status=='LS'}">
 		<script>alert("로그인 성공")</script>

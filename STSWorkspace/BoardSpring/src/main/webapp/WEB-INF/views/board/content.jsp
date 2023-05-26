@@ -45,7 +45,10 @@
 
 			<tr align="right">
 
-				<td align="left" id=>첨부파일 : </td>
+				<td align="left" id=>첨부파일 : 
+				<a
+					href="/board/download?sysName=${files.sysName }&oriName=${files.oriName}">${files.oriName }</a>
+				</td>
 
 				<td colspan="2"><c:choose>
 						<c:when test="${dto.writer eq sessionScope.loginId}">
