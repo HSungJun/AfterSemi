@@ -1,6 +1,5 @@
 package kh.spring.controller;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import kh.spring.dto.MoviesDTO;
-import kh.spring.repositories.MoviesDAO;
+import kh.spring.service.MoviesService;
 
 @Controller
 public class HomeController {
 
 	@Autowired
-	private MoviesDAO dao;
+	private MoviesService MS;
+	
 
 	@RequestMapping("/")
 	public String home(Locale locale, Model model) throws Exception {
@@ -24,6 +24,24 @@ public class HomeController {
 		return "home";
 	}
 
+	
+	@RequestMapping("transactional")
+	public String transactionTest() {
+		MoviesDTO dto = new MoviesDTO(0,"나홀로집에","코미디");
+		MS.transactionTest(dto);
+		return "home";
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	@RequestMapping("/toInput")
 	public String toInput() {  // 리턴자료형이 void 일 경우 자동으로 요청된 String 을 forward > 해당 리퀘스트의 경우 
 		// toInput.jsp로 보냄
@@ -31,7 +49,7 @@ public class HomeController {
 	}
 
 	@RequestMapping("/inputProc")
-	public String inputProc(/*HttpServletRequest request/ String title, String genre*/ MoviesDTO dto) throws Exception {
+	public String inputProc(/*HttpServletRequest request/ String title, String genre MoviesDTO dto) throws Exception {
 		//		String title = request.getParameter("title");
 		//		String genre = request.getParameter("genre");
 		//리퀘스트로 받지 않고 매개변수로 받을경우 name값을 변수명으로 지정해주어야 받아올 수 있음.
@@ -107,7 +125,9 @@ public class HomeController {
 //		System.out.println(result);
 //		return "redirect:/";
 //	}
-//	
+//
+ 	
+ */
 	//예외처리 argument에 Exceiption e 를 넣어 pispatcher에게 요청하여 출력
 	@ExceptionHandler(Exception.class)
 	public String exceptionHandler(Exception e) {

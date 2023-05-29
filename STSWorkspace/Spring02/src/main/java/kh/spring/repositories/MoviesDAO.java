@@ -20,6 +20,10 @@ public class MoviesDAO {
 		return mybatis.insert("Movies.insert",dto);
 	}
 	
+	public int inserthistory(MoviesDTO dto) {
+		return mybatis.insert("Movies.insertHistory",dto);
+	}
+	
 	public List<MoviesDTO> selectAll(){
 		return mybatis.selectList("Movies.selectAll");
 	}
@@ -44,6 +48,8 @@ public class MoviesDAO {
 
 		return mybatis.selectList("Movies.selectByMultiCon",dto);
 	}
+
+	
 	
 	
 	

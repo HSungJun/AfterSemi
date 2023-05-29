@@ -8,6 +8,12 @@
   	<insert id="insert">
 		insert into movies values(movies_seq.nextval,#{title},#{genre})  	
 	</insert>
+  	
+  	<insert id="insertHistory">
+		insert into history values(history_seq.nextval,#{title},sysdate)
+	</insert>
+  
+  
   
   	<select id="selectAll" resultType="kh.spring.dto.MoviesDTO">
   		select * from movies
