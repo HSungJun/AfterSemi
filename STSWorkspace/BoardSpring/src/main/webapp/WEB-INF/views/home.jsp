@@ -54,11 +54,12 @@
 			<table border=1 align=center>
 				<tr>
 					
-					<th colspan=4>${sessionScope.loginId} 님 환영합니다.</th>
+					<th colspan=5>${sessionScope.loginId} 님 환영합니다.</th>
 					
 				</tr>
 				<tr>
 					<td align=center><a href="/board/boardlist"><button id="toBoard">게시판</button></a></td>
+					<td align=center><a href="/chat/main"><button id="btn_chat">채팅으로</button></a></td>
 					<td align=center><a href="/member/myPage?loginId=${sessionScope.loginId}"><button id="myPage">마이페이지</button></a></td>
 					<td align=center><a href="/member/logout"><button id="Logout">로그아웃</button></a></td>
 					<td align=center><a href="/member/out?loginId=${sessionScope.loginId}"><button id="memberOut">회원탈퇴</button></a></td>

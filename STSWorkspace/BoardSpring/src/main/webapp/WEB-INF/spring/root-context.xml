@@ -28,6 +28,8 @@
 		<constructor-arg name="sqlSessionFactory"
 			ref="sqlSessionFactory"></constructor-arg>
 	</bean>
+	
+	
 
 
 	<!-- bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate"> 
@@ -35,5 +37,7 @@
 
 	<context:component-scan
 		base-package="kh.spring.repositories"></context:component-scan>
+	
+	<context:component-scan base-package="kh.spring.config"></context:component-scan>
 
 </beans>

@@ -10,12 +10,11 @@
 
 <style>
 	
-	div{border:1px solid black; box-sizing: border-box; word-break:break-all;}
-	button{box-sizing: border-box;}
+	div{border:1px solid black; box-sizing: border-box;}                   
 	#chatBox{margin:auto; width:300px; height:400px;}
-	#chatList{width:100%; height:90%; overflow:auto;}
+	#chatList{width:100%; height:90%; overflow-y:auto; max-height:100%;}
 	#sendChat{width:80%; height:10%; float:left; overflow:auto;}
-	#send{width:20%; height:10%; float:right;}
+	#send{width:20%; height:10%; float:right; box-sizing: border-box;}
 </style>
 
 <body>
@@ -31,28 +30,26 @@
 				$("#sendChat").focus();
 				}
 			});
+			
 			$("#send").on("click",function(){
 				let message = $("#sendChat").text();
 				ws.send(message);
 				$("#sendChat").text("");
 				$("#sendChat").focus();
-			})
-			
+			});
 			
 			ws.onmessage = function(e){
+				console.log("!!!");
 				let chat = $("<div>");
 				chat.text(e.data)
-				
 				$("#chatList").append(chat);
+         	   	$("#chatList").scrollTop($("#chatList")[0].scrollHeight);
 			}
 		});
 		
 	</script>
-	
 	<div id="chatBox">
-		<div id="chatList">
-			
-		</div>
+		<div id="chatList"></div>
 		<div id="sendChat" contenteditable="true"></div>
 		<button id="send">전송</button>
 	</div>
