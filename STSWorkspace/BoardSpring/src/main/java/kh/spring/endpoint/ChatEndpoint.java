@@ -57,8 +57,9 @@ public class ChatEndpoint {
 			
 			for(Session session : clients) {
 				try {
-					session.getBasicRemote().sendText(new Gson().toJson(dto));
-				}catch(IOException e) {}
+					service.send(id,message,null);
+//					session.getBasicRemote().sendText(new Gson().toJson(dto));
+				}catch(Exception e) {}
 			}
 		}
 	}
@@ -69,8 +70,8 @@ public class ChatEndpoint {
 		ChatEndpoint.clients.add(session);
 		this.hSession = (HttpSession)config.getUserProperties().get("hSession");
 		
-		try {session.getBasicRemote().sendText(new Gson().toJson(messages));}
-		catch(IOException e) {}
+//		try {session.getBasicRemote().sendText(new Gson().toJson(messages));}
+//		catch(IOException e) {}
 		
 //		String message = "님 어서오세요";
 //		

@@ -64,7 +64,7 @@ public class MemberController {
 
 	@RequestMapping("logout")
 	public String logout(String id, String pw) {
-		session.invalidate();
+		session.removeAttribute("loginId");
 		return "redirect:/";
 	}
 
