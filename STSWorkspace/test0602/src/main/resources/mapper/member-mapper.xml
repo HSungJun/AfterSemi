@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+	<mapper namespace="mybatis">
+		<insert id="insertMember">
+			insert into member values(${user_no},${user_id},${user_pw},${user_name},${user_addr},${reg_date})
+		</insert>
+	</mapper>
