@@ -1,4 +1,5 @@
 import img from '../../../assets/IMG.jpg'
+import './ImageBox.css';
 
 function ImgBox(){
     return(

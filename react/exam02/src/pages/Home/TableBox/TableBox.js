@@ -1,7 +1,9 @@
+import './TableBox.css';
+
 const TableBox =() =>(
     <div className="tableBox">
 
-          <table>
+          <table className="table">
             <thead>
               <tr>
                 <th>Seq</th>

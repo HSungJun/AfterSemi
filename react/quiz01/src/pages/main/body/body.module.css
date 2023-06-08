@@ -1,0 +1,11 @@
+.Body{
+    display: flex;
+}
+
+.Contents{
+    flex:2;
+}
+
+.Aside{
+    flex: 1;
+}

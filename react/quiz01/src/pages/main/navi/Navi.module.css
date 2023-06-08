@@ -1,0 +1,14 @@
+.Navi{
+    background-color: lightgray;
+    display: flex;
+}
+
+.Navi div{
+    text-align: center;
+    flex: 1;
+}
+
+.Navi :hover{
+    color: white;
+    background-color: black;
+}
