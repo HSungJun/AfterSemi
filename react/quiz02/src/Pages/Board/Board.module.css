@@ -1,0 +1,13 @@
+.Board{
+
+}
+
+.Table{
+    margin: auto;
+    width: 100%;
+    border: 1px solid gray;
+}
+
+.Tr{
+    background-color: lightgray;
+}
